@@ -135,6 +135,7 @@ function playItRace() {
   player.src = clipName;
   player.onended = function () {
     disableButtons(false);
+    player.onended = null;
     doPrevNext(1);
   };
   player.play();
