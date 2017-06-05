@@ -1,0 +1,118 @@
+<html>
+
+Heats Per Round-- 
+<select id='heatselect'>
+  <option  value="1">1</option>
+  <option  value="2">2</option>
+  <option  value="3">3</option>
+  <option  value="4" selected>4</option>
+  <option  value="5">5</option>
+  <option  value="6">6</option>
+  <option  value="7">7</option>
+  <option  value="8">8</option>
+</select>
+
+&nbsp;&nbsp;
+&nbsp;&nbsp;
+
+<button  onclick="doPrevNext(false);">Previous</button>
+&nbsp;&nbsp;
+<button onclick="doPrevNext(true);">Next</button>
+<hr/>
+
+Current Round -- <span id="currentround">1</span>
+&nbsp;&nbsp;&nbsp;
+Current Heat -- <span id="currentheat">1</span>
+
+<hr>
+<audio id="player" type="audio/mpeg">THIS BROWSER DOES NOT SUPPORT AUDIO</audio>
+
+<button onclick="playItRound('round','.mp3')">Round</button>
+&nbsp;
+&nbsp;
+<button  onclick="playItHeat('heat','.mp3', 0)">Heat</button>
+
+&nbsp;
+&nbsp;
+<button  onclick="playItHeat('heat','isup.mp3', 0)">Heat Is Up</button>
+
+&nbsp;
+&nbsp;
+<button  onclick="playItHeat('heat', 'spotters.mp3', 1)">Heat Spotters</button>
+
+&nbsp;
+&nbsp;
+<button  onclick="playIt('pilotthumbs.mp3')">Pilots Ready</button>
+
+&nbsp;
+&nbsp;
+<button  onclick="playIt('spotterthumbs.mp3')">Spotters Ready</button>
+
+&nbsp;
+&nbsp;
+<button  onclick="playIt('lessthanten.mp3')">Starts in Ten</button>
+
+
+
+
+<script>
+
+function doPrevNext  (direction) {
+	var currentheat = document.getElementById("currentheat");
+	var currentround = document.getElementById("currentround");
+    var heat = currentheat.innerHTML;
+    var round = currentround.innerHTML;
+	var heatselect = document.getElementById("heatselect");
+    var maxHeat = heatselect.selectedIndex + 1;
+    if (direction) {
+    	heat++;
+    } else {
+    	heat--;
+    }
+    if (heat > maxHeat) {
+    	heat = 1;
+    	round++;
+    }
+    if (heat < 1) {
+    	heat = 1;
+    	round--;
+    }
+    if (round < 1 || round > 8) {
+    	round = 1;
+    }
+    currentheat.innerHTML = heat;
+    currentround.innerHTML = round;
+}
+
+function playIt(clipName) {
+  player.src = clipName;
+  player.play();
+}
+
+
+function playItRound(firstStr,secondStr) {
+  var currentround = document.getElementById("currentround");	
+  var round = currentround.innerHTML;
+  var player = document.getElementById("player")
+  var clipName = firstStr + round + secondStr;
+  player.src = clipName;
+  player.play();
+}
+
+function playItHeat(firstStr,secondStr,offset) {
+  var currentheat = document.getElementById("currentheat");
+  var heat = currentheat.innerHTML;
+  var myHeat = Number(offset) + Number(heat);
+  var heatselect = document.getElementById("heatselect");
+  var maxHeat = heatselect.selectedIndex + 1;
+  if (myHeat > maxHeat) {
+	  myHeat = 1;
+  }
+  var player = document.getElementById("player")
+  var clipName = firstStr + myHeat + secondStr;
+  player.src = clipName;
+  player.play();
+}
+
+</script>
+</html>
