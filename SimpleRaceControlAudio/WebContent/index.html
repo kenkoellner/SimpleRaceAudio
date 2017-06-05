@@ -127,11 +127,8 @@ function playItHeat(firstStr,secondStr,offset) {
 function abort() {
   var player = document.getElementById("player");
   var ended = player.ended;
-  if (!ended) {
-    player.pause();
-  }	
+  player.pause();
   playIt('abort.mp3');
-  doPrevNext(-1);
 }
 
 
