@@ -1,5 +1,12 @@
 <html>
 
+<style>
+button {
+    width: 100%;
+    margin: 5px;
+}
+</style>
+
 Heats Per Round-- 
 <select id='heatselect'>
   <option  value="1">1</option>
@@ -13,9 +20,11 @@ Heats Per Round--
 </select>
 <hr/>
 
+<div>
 <button  onclick="doPrevNext(-1);">Previous</button>
-&nbsp;&nbsp;
+<br/>
 <button onclick="doPrevNext(1);">Next</button>
+
 <hr/>
 
 Round - <span id="currentround">1</span>
@@ -23,6 +32,7 @@ Round - <span id="currentround">1</span>
 Heat - <span id="currentheat">1</span>
 
 <hr>
+
 <audio id="player" type="audio/mpeg">THIS BROWSER DOES NOT SUPPORT AUDIO</audio>
 
 <button onclick="playItRound('round','.mp3')">Round</button>
@@ -46,8 +56,11 @@ Heat - <span id="currentheat">1</span>
 <button  onclick="playIt('lessthanfive.mp3')">Starts in Five</button>
 
 <br/>
-<button  onclick="playIt('abort.mp3');doPrevNext(false);">ABORT RACE!!!</button>
+<button  onclick="playItRace('twominutecount.mp3');">Two Minute Race</button>
 
+<br/>
+<button  onclick="abort();">ABORT RACE!!!</button>
+</div>
 
 
 
@@ -78,18 +91,26 @@ function doPrevNext  (direction) {
 }
 
 function playIt(clipName) {
+  var player = document.getElementById("player");	
+  player.onended = null;
   player.src = clipName;
   player.play();
 }
 
-
+function playItRace(clipName) {
+  var player = document.getElementById("player");	
+  player.src = clipName;
+  player.onended = function () {
+    doPrevNext(1);
+  };
+  player.play();
+}
+  
 function playItRound(firstStr,secondStr) {
   var currentround = document.getElementById("currentround");	
   var round = currentround.innerHTML;
-  var player = document.getElementById("player")
   var clipName = firstStr + round + secondStr;
-  player.src = clipName;
-  player.play();
+  playIt(clipName);
 }
 
 function playItHeat(firstStr,secondStr,offset) {
@@ -101,11 +122,20 @@ function playItHeat(firstStr,secondStr,offset) {
   if (myHeat > maxHeat) {
 	  myHeat = 1;
   }
-  var player = document.getElementById("player")
   var clipName = firstStr + myHeat + secondStr;
-  player.src = clipName;
-  player.play();
+  playIt(clipName);
 }
+
+function abort() {
+  var player = document.getElementById("player");
+  var ended = player.ended;
+  if (!ended) {
+    player.pause();
+  }	
+  playIt('abort.mp3');
+  doPrevNext(-1);
+}
+
 
 </script>
 </html>
