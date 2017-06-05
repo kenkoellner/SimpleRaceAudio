@@ -5,10 +5,10 @@ button {
     margin: 5px;
 }
 .optional { 
-    font: italic;
+    font-style: italic;
 }
 .critical { 
-    background-color: yellow;
+    color: red;
 }
 </style>
 
@@ -23,7 +23,7 @@ Heats/Round--
   <option  value="7">7</option>
   <option  value="8">8</option>
 </select>
-&nbsp;Race
+<br/>Races are 
 <select id='lenselect'>
   <option  value="0">2.0</option>
   <option  value="1">2.5</option>
@@ -32,9 +32,8 @@ minutes.
 <hr/>
 
 
-<button  onclick="doPrevNext(-1);">Previous</button>
-<br/>
-<button onclick="doPrevNext(1);">Next</button>
+<button class="optional"  onclick="doPrevNext(-1);">Previous</button>
+<button class="optional"  onclick="doPrevNext(1);">Next</button>
 
 <hr/>
 
@@ -46,16 +45,16 @@ Heat - <span id="currentheat">1</span>
 
 <audio id="player" type="audio/mpeg">THIS BROWSER DOES NOT SUPPORT AUDIO</audio>
 
-<button onclick="playItRound('round','.mp3')">Round</button>
+<button class="optional" onclick="playItRound('round','.mp3')">Round</button>
 <br/>
 
-<button  onclick="playItHeat('heat','.mp3', 0)">Heat</button>
+<button class="optional"  onclick="playItHeat('heat','.mp3', 0)">Heat</button>
 
 <br/>
 <button  onclick="playItHeat('heat','isup.mp3', 0)">Heat Is Up</button>
 
 <br/>
-<button  onclick="playItHeat('heat', 'spotters.mp3', 1)">Heat Spotters</button>
+<button   class="optional" onclick="playItHeat('heat', 'spotters.mp3', 1)">Heat Spotters</button>
 
 <br/>
 <button  onclick="playIt('pilotthumbs.mp3')">Pilots Ready</button>
@@ -70,7 +69,7 @@ Heat - <span id="currentheat">1</span>
 <button  onclick="playItRace();">Start Race</button>
 
 <br/>
-<button  onclick="abort();">ABORT RACE!!!</button>
+<button class="critical" onclick="abort();">ABORT RACE!!!</button>
 
 
 
