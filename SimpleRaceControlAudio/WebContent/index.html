@@ -1,18 +1,25 @@
 <html>
 
 <style>
-button {
-    margin: 5px;
+button{
+    margin: 2px;
+    border: none;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;   
+}
+.narrowButton {
+    width: 90px;   
 }
 .optional { 
     font-style: italic;
 }
 .critical { 
-    color: red;
+    background-color: yellow;
 }
 </style>
 
-Heats/Round-- 
+<span>
 <select id='heatselect'>
   <option  value="1">1</option>
   <option  value="2">2</option>
@@ -23,59 +30,64 @@ Heats/Round--
   <option  value="7">7</option>
   <option  value="8">8</option>
 </select>
-<br/>Races are 
+heats per round.
+</span>  
+<br/>
+<span>
 <select id='lenselect'>
   <option  value="0">2.0</option>
   <option  value="1">2.5</option>
 </select>
 minutes.
+</span>
 <hr/>
 
 
-<button class="optional"  onclick="doPrevNext(-1);">Previous</button>
-<button class="optional"  onclick="doPrevNext(1);">Next</button>
+<button class="optional disButton narrowButton"  onclick="doPrevNext(-1);">Previous</button>
+<button class="optional disButton narrowButton"  onclick="doPrevNext(1);">Next</button>
 
 <hr/>
 
 Round - <span id="currentround">1</span>
-&nbsp;&nbsp;
+&nbsp;
 Heat - <span id="currentheat">1</span>
 
 <hr>
 
-<button class="optional" onclick="playItRound('round','.mp3')">Round</button>
+<button class="optional disButton" onclick="playItRound('round','.mp3')">Round</button>
 <br/>
 
-<button class="optional"  onclick="playItHeat('heat','.mp3', 0)">Heat</button>
+<button class="optional disButton"  onclick="playItHeat('heat','.mp3', 0)">Heat</button>
 
 <br/>
-<button  onclick="playItHeat('heat','isup.mp3', 0)">Heat Is Up</button>
+<button class="disButton" onclick="playItHeat('heat','isup.mp3', 0)">Heat Is Up</button>
 
 <br/>
-<button   class="optional" onclick="playItHeat('heat', 'spotters.mp3', 1)">Heat Spotters</button>
+<button  class="optional disButton"  class="optional" onclick="playItHeat('heat', 'spotters.mp3', 1)">Heat Spotters</button>
 
 <br/>
-<button  onclick="playIt('pilotthumbs.mp3')">Pilots Ready</button>
+<button  class="disButton" onclick="playIt('pilotthumbs.mp3')">Pilots Ready</button>
 
 <br/>
-<button  onclick="playIt('spotterthumbs.mp3')">Spotters Ready</button>
+<button  class="disButton"  onclick="playIt('spotterthumbs.mp3')">Spotters Ready</button>
 
 <br/>
-<button  onclick="playIt('lessthanfive.mp3')">Starts in Five</button>
+<button   class="disButton" onclick="playIt('lessthanfive.mp3')">Starts in Five</button>
 
 <br/>
-<button  onclick="playItRace();">Start Race</button>
+<button  class="disButton" onclick="playItRace();">Start Race</button>
 
 <br/>
-<button class="critical" onclick="abort();">ABORT RACE!!!</button>
+<button class="critical optional" onclick="abort();">ABORT RACE!</button>
 
 <hr/>
-<audio controls id="player" type="audio/mpeg">THIS BROWSER DOES NOT SUPPORT AUDIO</audio>
+<audio id="player" controls src="welcome.mp3" type="audio/mpeg" >THIS BROWSER DOES NOT SUPPORT AUDIO</audio>
 
 
 
 <script>
 
+ 
 function doPrevNext  (direction) {
 	var currentheat = document.getElementById("currentheat");
 	var currentround = document.getElementById("currentround");
@@ -118,11 +130,21 @@ function playItRace() {
   var player = document.getElementById("player");	
   player.src = clipName;
   player.onended = function () {
+    disableButtons(false);
     doPrevNext(1);
   };
   player.play();
+  disableButtons(true);
 }
   
+function disableButtons(disabledFlag) {
+  var playerButtons = document.getElementsByClassName("disButton");
+  var len = playerButtons.length;
+  for (i = 0; i < len; i++) {
+    playerButtons[i].disabled=disabledFlag;
+  }
+}
+ 
 function playItRound(firstStr,secondStr) {
   var currentround = document.getElementById("currentround");	
   var round = currentround.innerHTML;
@@ -148,6 +170,7 @@ function abort() {
   var ended = player.ended;
   player.pause();
   playIt('abort.mp3');
+  disableButtons(false);
 }
 
 
