@@ -1,6 +1,9 @@
 <html>
 
 <style>
+span {
+   font-family : Sans-serif;
+}
 button{
     margin: 2px;
     border: none;
@@ -40,31 +43,28 @@ heats per round.
 </select>
 minutes.
 </span>
-<hr/>
-
-
-<button class="optional disButton narrowButton"  onclick="doPrevNext(-1);">Previous</button>
-<button class="optional disButton narrowButton"  onclick="doPrevNext(1);">Next</button>
 
 <hr/>
-
+<span>
 Round - <span id="currentround">1</span>
 &nbsp;
 Heat - <span id="currentheat">1</span>
+</span>
 
-<hr>
+<hr/>
 
-<button class="optional disButton" onclick="playItRound('round','.mp3')">Round</button>
+<button class="disButton" onclick="playItRound('round','.mp3')">Round</button>
 <br/>
 
-<button class="optional disButton"  onclick="playItHeat('heat','.mp3', 0)">Heat</button>
+<button class="disButton"  onclick="playItHeat('heat','.mp3', 0)">Heat</button>
 
 <br/>
 <button class="disButton" onclick="playItHeat('heat','isup.mp3', 0)">Heat Is Up</button>
 
+<!-- 
 <br/>
 <button  class="optional disButton"  class="optional" onclick="playItHeat('heat', 'spotters.mp3', 1)">Heat Spotters</button>
-
+ -->
 <br/>
 <button  class="disButton" onclick="playIt('pilotthumbs.mp3')">Pilots Ready</button>
 
@@ -78,10 +78,14 @@ Heat - <span id="currentheat">1</span>
 <button  class="disButton" onclick="playItRace();">Start Race</button>
 
 <br/>
-<button class="critical optional" onclick="abort();">ABORT RACE!</button>
+<button class="critical" onclick="abort();">ABORT RACE!</button>
 
 <hr/>
 <audio id="player" controls src="welcome.mp3" type="audio/mpeg" >THIS BROWSER DOES NOT SUPPORT AUDIO</audio>
+
+<hr/>
+<button class="disButton narrowButton"  onclick="doPrevNext(-1);">Previous</button>
+<button class="disButton narrowButton"  onclick="doPrevNext(1);">Next</button>
 
 
 
