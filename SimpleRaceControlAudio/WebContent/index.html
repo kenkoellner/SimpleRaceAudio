@@ -10,6 +10,7 @@ button{
     border-radius: 4px;
     padding: 5px;
     width: 150px;   
+    background-color: AliceBlue;
 }
 .narrowButton {
     width: 90px;   
@@ -81,7 +82,7 @@ Heat - <span id="currentheat">1</span>
 <button  class="disButton" onclick="playItRace();">Start Race</button>
 
 <br/>
-<button class="critical" onclick="abort();">ABORT RACE!</button>
+<button id="abort" class="critical" disabled onclick="abort();">ABORT RACE!</button>
 
 <hr/>
 <audio id="player" controls src="welcome.mp3" type="audio/mpeg" >THIS BROWSER DOES NOT SUPPORT AUDIO</audio>
@@ -94,7 +95,8 @@ Heat - <span id="currentheat">1</span>
 
 <script>
 
- 
+
+
 function doPrevNext  (direction) {
 	var currentheat = document.getElementById("currentheat");
 	var currentround = document.getElementById("currentround");
@@ -121,7 +123,6 @@ function doPrevNext  (direction) {
 
 function playIt(clipName) {
   var player = document.getElementById("player");	
-  player.onended = null;
   player.src = clipName;
   player.play();
 }
@@ -139,8 +140,10 @@ function playItRace() {
   player.onended = function () {
     disableButtons(false);
     player.onended = null;
+    document.getElementById("abort").disabled = true;
     doPrevNext(1);
   };
+  document.getElementById("abort").disabled = false;
   player.play();
   disableButtons(true);
 }
@@ -174,11 +177,14 @@ function playItHeat(firstStr,secondStr,offset) {
 }
 
 function abort() {
+  document.getElementById("abort").disabled = true;
   var player = document.getElementById("player");
-  var ended = player.ended;
   player.pause();
+  player.onended = function () {
+    disableButtons(false);
+    player.onended = null;
+  };
   playIt('abort.mp3');
-  disableButtons(false);
 }
 
 
